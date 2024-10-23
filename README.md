@@ -42,3 +42,26 @@ The main functionality is implemented in `src/main.rs`:
 
 - **Concurrency**: The application uses Rust's threading capabilities to run the spinner in a separate thread, allowing the main program to perform other tasks concurrently.
 - **Atomic Operations**: An `AtomicBool` wrapped in an `Arc` is used to safely share the spinner's running state across threads.
+
+## Example use case
+
+- using [mods](https://github.com/charmbracelet/mods)
+- using [extract]()
+
+```bash
+function summ() {
+  /path/to/spinner/executable &
+
+  # Capture the PID of the spinner
+  local spinner_pid=$!
+
+  # use mods for command line LLM wizadry
+  # paste the content to summarize
+  pbpaste | mods -f markdown --role summarizer --no-cache | bat -p -l md
+
+  # Kill the spinner once the task is done
+  kill $spinner_pid 2>/dev/null
+
+}
+
+```
